@@ -11,6 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMaster.Application", "EMas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMaster.API", "EMaster.API\EMaster.API.csproj", "{AF72440D-B1DB-403C-9ECA-AC940FED460D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{FA6BDBF1-7FE7-4D24-BF20-74493E250AB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{1D89821F-95DA-4D8D-A39E-845D58032F33}"
+	ProjectSection(SolutionItems) = preProject
+		dummy = dummy
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +43,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B4CA435D-DFAB-40EF-8BC5-C3EA3537609E} = {FA6BDBF1-7FE7-4D24-BF20-74493E250AB1}
+		{F6B3C5E1-E768-4CB0-B5BE-DD156603DE5C} = {FA6BDBF1-7FE7-4D24-BF20-74493E250AB1}
+		{21607F1D-00F0-4D34-BD20-E9C9D08BEC81} = {FA6BDBF1-7FE7-4D24-BF20-74493E250AB1}
+		{AF72440D-B1DB-403C-9ECA-AC940FED460D} = {FA6BDBF1-7FE7-4D24-BF20-74493E250AB1}
 	EndGlobalSection
 EndGlobal
