@@ -4,8 +4,8 @@ using EMaster.Domain.Responses;
 
 namespace EMaster.Domain.Interfaces.EntityFramework
 {
-    public interface IUserRepository : IGenericRepo<User,UserRequest,UserResponse>
+    public interface IUserRepo : IGenericRepo<User,UserRequest,UserResponse>
     {
-
+       
     }
 }

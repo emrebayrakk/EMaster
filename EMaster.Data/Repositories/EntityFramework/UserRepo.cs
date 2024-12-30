@@ -6,7 +6,7 @@ using EMaster.Domain.Responses;
 
 namespace EMaster.Data.Repositories.EntityFramework
 {
-    public class UserRepo : GenericRepo<User, UserRequest, UserResponse>, IUserRepository
+    public class UserRepo : GenericRepo<User, UserRequest, UserResponse>, IUserRepo
     {
         public UserRepo(EMasterContext dbContext) : base(dbContext)
         {
