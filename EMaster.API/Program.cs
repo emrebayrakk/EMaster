@@ -27,6 +27,16 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 MapsterConfiguration.ConfigureMappings();
 
 var app = builder.Build();
@@ -41,6 +51,8 @@ if (app.Environment.IsDevelopment())
             .WithDarkModeToggle(false);
     });
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

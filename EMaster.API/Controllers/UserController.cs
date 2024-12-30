@@ -40,7 +40,7 @@ namespace EMaster.API.Controllers
             return _userService.GetUser(id);
         }
         [Authorize]
-        [HttpPost("Create")]
+        [HttpPost("register")]
         [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status404NotFound)]
         public ApiResponse<long> Create([FromBody] UserRequest user)
@@ -48,7 +48,7 @@ namespace EMaster.API.Controllers
             var response = _userService.Create(user);
             return response;
         }
-        [HttpPost("Login")]
+        [HttpPost("login")]
         [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status404NotFound)]
         public ApiResponse<LoginResponse> Login([FromBody] LoginRequest user)
