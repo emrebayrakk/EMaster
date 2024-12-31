@@ -1,7 +1,9 @@
-﻿using EMaster.Domain.Interfaces;
+﻿using EMaster.Domain.Entities;
+using EMaster.Domain.Interfaces;
 using EMaster.Domain.Interfaces.EntityFramework;
 using EMaster.Domain.Requests;
 using EMaster.Domain.Responses;
+using Microsoft.AspNetCore.Identity;
 
 namespace EMaster.Application.User
 {
@@ -9,11 +11,13 @@ namespace EMaster.Application.User
     {
         private readonly IUserRepo _userRepository;
         private readonly IJwtProvider _jwtProvider;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public UserService(IUserRepo userRepository, IJwtProvider jwtProvider)
+        public UserService(IUserRepo userRepository, IJwtProvider jwtProvider, IPasswordHasher passwordHasher)
         {
             _userRepository = userRepository;
             _jwtProvider = jwtProvider;
+            _passwordHasher = passwordHasher;
         }
 
         public ApiResponse<long> Create(UserRequest userInput)
@@ -22,7 +26,7 @@ namespace EMaster.Application.User
             if (existUser != null)
                 return new ApiResponse<long>(false, ResultCode.Instance.Duplicate, "EmailExist", -1);
 
-            userInput.PasswordHash = BCrypt.Net.BCrypt.HashPassword(userInput.PasswordHash);
+            userInput.PasswordHash = _passwordHasher.Hash(userInput.PasswordHash);
             long id = _userRepository.Add(userInput);
             if (id != -1)
                 return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
@@ -38,7 +42,7 @@ namespace EMaster.Application.User
         public ApiResponse<LoginResponse> Login(LoginRequest login)
         {
             var result = _userRepository.FirstOrDefault(a => a.Email == login.Email);
-            if (result is not null && BCrypt.Net.BCrypt.Verify(login.Password, result.PasswordHash))
+            if (result is not null && _passwordHasher.Verify(login.Password, result.PasswordHash))
             {
                 var token = _jwtProvider.CreateToken(result);
                 LoginResponse response = new LoginResponse

@@ -3,6 +3,7 @@ using EMaster.Application.Authentication;
 using EMaster.Application.User;
 using EMaster.Data.Context;
 using EMaster.Data.Mappings;
+using EMaster.Data.Repositories;
 using EMaster.Data.Repositories.EntityFramework;
 using EMaster.Domain.Interfaces;
 using EMaster.Domain.Interfaces.EntityFramework;
@@ -25,6 +26,7 @@ builder.Services.AddDbContext<EMasterContext>(options =>
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 
 builder.Services.AddCors(options =>

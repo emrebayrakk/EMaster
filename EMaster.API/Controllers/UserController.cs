@@ -39,7 +39,6 @@ namespace EMaster.API.Controllers
         {
             return _userService.GetUser(id);
         }
-        [Authorize]
         [HttpPost("register")]
         [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status404NotFound)]
