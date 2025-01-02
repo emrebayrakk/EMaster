@@ -6,24 +6,25 @@ namespace EMaster.Data.Repositories
 {
     public class PasswordHasher : IPasswordHasher
     {
-        private const int SaltSize = 16;
-        private const int HashSize = 32;
+        private const int SaltSize = 128 / 8;
+        private const int HashSize = 256 / 8;
         private const int Iterations = 10000;
-        private static readonly HashAlgorithmName Algorithm = HashAlgorithmName.SHA512;
+        private static readonly HashAlgorithmName Algorithm = HashAlgorithmName.SHA256;
+        private const string Delimiter = ":";
         public string Hash(string password)
         {
-            byte[] salt = RandomNumberGenerator.GetBytes(SaltSize);
-            byte[] hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, Algorithm, HashSize);
+            var salt = RandomNumberGenerator.GetBytes(SaltSize);
+            var hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, Algorithm, HashSize);
 
-            return $"{Convert.ToHexString(hash)}:{Convert.ToHexString(salt)}";
+            return string.Join(Delimiter,Convert.ToBase64String(salt), Convert.ToBase64String(hash));
         }
 
         public bool Verify(string password, string passwordHash)
         {
-            string[] parts = passwordHash.Split(':');
-            byte[] hash = Convert.FromHexString(parts[0]);
-            byte[] salt = Convert.FromHexString(parts[1]);
-            byte[] hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, Algorithm, HashSize);
+            var parts = passwordHash.Split(Delimiter);
+            var salt = Convert.FromBase64String(parts[0]);
+            var hash = Convert.FromBase64String(parts[1]);
+            var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, Algorithm, HashSize);
             return CryptographicOperations.FixedTimeEquals(hash, hashToCompare);
         }
     }
