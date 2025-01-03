@@ -41,6 +41,32 @@ namespace EMaster.Data.Context
 
             return base.SaveChanges();
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Name).IsRequired().HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Income>(entity =>
+            {
+                entity.HasKey(i => i.Id);
+                entity.Property(i => i.Amount).HasColumnType("decimal(10, 2)");
+                entity.HasOne(i => i.Category)
+                      .WithMany(c => c.Incomes)
+                      .HasForeignKey(i => i.CategoryID);
+            });
+
+            modelBuilder.Entity<Expense>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+                entity.HasOne(e => e.Category)
+                      .WithMany(c => c.Expenses)
+                      .HasForeignKey(e => e.CategoryID);
+            });
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,6 +82,9 @@ namespace EMaster.Data.Context
                 });
             }
         }
+        public DbSet<Category> Categories { get; set; } = null!;
+        public DbSet<Income> Incomes { get; set; } = null!;
+        public DbSet<Expense> Expenses { get; set; } = null!;
         public DbSet<User> Users { get; set; }
     }
 }

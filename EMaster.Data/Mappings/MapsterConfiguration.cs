@@ -15,6 +15,29 @@ namespace EMaster.Data.Mappings
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Username, src => src.Username)
                 .Map(dest => dest.Email, src => src.Email);
+
+            TypeAdapterConfig<Category, CategoryResponse>
+                .NewConfig()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Name);
+
+            TypeAdapterConfig<Income, IncomeResponse>
+                .NewConfig()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.CategoryID, src => src.CategoryID)
+                .Map(dest => dest.Amount, src => src.Amount)
+                .Map(dest => dest.Date, src => src.Date)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.CategoryName, src => src.Category.Name); 
+
+            TypeAdapterConfig<Expense, ExpenseResponse>
+                .NewConfig()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.CategoryID, src => src.CategoryID)
+                .Map(dest => dest.Amount, src => src.Amount)
+                .Map(dest => dest.Date, src => src.Date)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.CategoryName, src => src.Category.Name); 
         }
     }
 }
