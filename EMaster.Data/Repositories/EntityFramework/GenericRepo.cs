@@ -109,11 +109,15 @@ namespace EMaster.Data.Repositories.EntityFramework
             }
         }
 
-        public List<TEntityOutput> GetAll(bool noTracking = true)
+        public List<TEntityOutput> GetAll(bool noTracking = true, params string[] includes)
         {
             try
             {
                 var query = noTracking ? entity.AsNoTracking() : entity;
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
                 var resultList = query.ToList();
                 return resultList.Adapt<List<TEntityOutput>>();
             }

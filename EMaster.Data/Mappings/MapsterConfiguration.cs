@@ -1,4 +1,5 @@
 ﻿using EMaster.Domain.Entities;
+using EMaster.Domain.Requests;
 using EMaster.Domain.Responses;
 using Mapster;
 
@@ -28,7 +29,7 @@ namespace EMaster.Data.Mappings
                 .Map(dest => dest.Amount, src => src.Amount)
                 .Map(dest => dest.Date, src => src.Date)
                 .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.CategoryName, src => src.Category.Name); 
+                .Map(dest => dest.CategoryName, src => src.Category.Name);
 
             TypeAdapterConfig<Expense, ExpenseResponse>
                 .NewConfig()

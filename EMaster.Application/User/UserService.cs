@@ -1,9 +1,7 @@
-﻿using EMaster.Domain.Entities;
-using EMaster.Domain.Interfaces;
+﻿using EMaster.Domain.Interfaces;
 using EMaster.Domain.Interfaces.EntityFramework;
 using EMaster.Domain.Requests;
 using EMaster.Domain.Responses;
-using Microsoft.AspNetCore.Identity;
 
 namespace EMaster.Application.User
 {

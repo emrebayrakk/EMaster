@@ -10,7 +10,7 @@ namespace EMaster.Domain.Interfaces.EntityFramework
         TEntity UpdateEntity(TEntityInput entity);
         int Delete(long id);
         TEntityOutput FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes);
-        List<TEntityOutput> GetAll(bool noTracking = true);
+        List<TEntityOutput> GetAll(bool noTracking = true, params string[] includes);
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes);
     }
 }

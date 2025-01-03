@@ -1,5 +1,8 @@
 using EMaster.API.OptionsSetup;
 using EMaster.Application.Authentication;
+using EMaster.Application.Category;
+using EMaster.Application.Expense;
+using EMaster.Application.Income;
 using EMaster.Application.User;
 using EMaster.Data.Context;
 using EMaster.Data.Mappings;
@@ -23,10 +26,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddDbContext<EMasterContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+#region DI
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<ICategoryRepo,CategoryRepo>();
+builder.Services.AddScoped<ICategoryService,CategoryService>();
+
+builder.Services.AddScoped<IExpenseRepo, ExpenseRepo>();
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
+
+builder.Services.AddScoped<IIncomeRepo, IncomeRepo>();
+builder.Services.AddScoped<IIncomeService, IncomeService>();
+
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+#endregion
+
+
 
 
 builder.Services.AddCors(options =>
