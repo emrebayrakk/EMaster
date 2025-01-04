@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EMaster.API.Controllers
 {
-    [Route("EMaster/api/v1/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ExpenseController : ControllerBase
     {
