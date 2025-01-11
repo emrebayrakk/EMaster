@@ -30,6 +30,21 @@ namespace EMaster.Data.Repositories.EntityFramework
                 throw ex;
             }
         }
+        public TEntityOutput AddWithReturn(TEntityInput entityInput)
+        {
+            try
+            {
+                var mappedEntity = entityInput.Adapt<TEntity>();
+                var res = this.entity.Add(mappedEntity);
+                var entityResult = dbContext.SaveChanges();
+                var response = res.Entity.Adapt<TEntityOutput>();
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public TEntity AddEntity(TEntityInput entityInput)
         {

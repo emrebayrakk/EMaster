@@ -6,6 +6,7 @@ namespace EMaster.Domain.Interfaces.EntityFramework
     {
         int Add(TEntityInput entity);
         TEntity AddEntity(TEntityInput entity);
+        TEntityOutput AddWithReturn(TEntityInput entityInput);
         int Update(TEntity entity);
         TEntity UpdateEntity(TEntityInput entity);
         int Delete(int id);

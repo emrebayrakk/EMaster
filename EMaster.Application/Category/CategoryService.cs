@@ -19,12 +19,12 @@ namespace EMaster.Application.Category
             return new ApiResponse<List<CategoryResponse>>(true, ResultCode.Instance.Ok, "Success", result);
         }
 
-        public ApiResponse<long> Create(CategoryRequest categoyInput)
+        public ApiResponse<CategoryResponse> Create(CategoryRequest categoyInput)
         {
-            long id = _categoryRepo.Add(categoyInput);
-            if (id != -1)
-                return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
-            return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
+            var res = _categoryRepo.AddWithReturn(categoyInput);
+            if (res != null)
+                return new ApiResponse<CategoryResponse>(true, ResultCode.Instance.Ok, "Success", res);
+            return new ApiResponse<CategoryResponse>(false, ResultCode.Instance.Failed, "ErrorOccured", null);
         }
 
         public ApiResponse<long> DeleteCategory(int id)

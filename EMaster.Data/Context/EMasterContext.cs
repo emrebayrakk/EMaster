@@ -5,11 +5,9 @@ namespace EMaster.Data.Context
 {
     public class EMasterContext : DbContext
     {
-
         public EMasterContext(DbContextOptions<EMasterContext> options) : base(options)
         {
         }
-
 
         public override int SaveChanges()
         {
@@ -30,7 +28,6 @@ namespace EMaster.Data.Context
 
                         case EntityState.Modified:
                             entity.UpdatedDate = now;
-                            entity.IsDeleted = false;
                             break;
 
                         case EntityState.Deleted:
@@ -44,8 +41,21 @@ namespace EMaster.Data.Context
 
             return base.SaveChanges();
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+                {
+                    var method = typeof(EMasterContext)
+                        .GetMethod(nameof(ApplyGlobalFilters), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!
+                        .MakeGenericMethod(entityType.ClrType);
+
+                    method.Invoke(null, new object[] { modelBuilder });
+                }
+            }
+
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(c => c.Id);
@@ -71,6 +81,11 @@ namespace EMaster.Data.Context
             });
         }
 
+        private static void ApplyGlobalFilters<T>(ModelBuilder modelBuilder) where T : BaseEntity
+        {
+            modelBuilder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connStr = "Data Source=DESKTOP-P87BUPQ;" +
@@ -85,6 +100,7 @@ namespace EMaster.Data.Context
                 });
             }
         }
+
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Income> Incomes { get; set; } = null!;
         public DbSet<Expense> Expenses { get; set; } = null!;
