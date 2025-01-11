@@ -27,6 +27,14 @@ namespace EMaster.Application.Category
             return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
         }
 
+        public ApiResponse<long> DeleteCategory(int id)
+        {
+            var res = _categoryRepo.Delete(id);
+            if (res != -1)
+                return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", res);
+            return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
+        }
+
         public ApiResponse<CategoryResponse> GetCategory(long id)
         {
             var result = _categoryRepo.FirstOrDefaultAsync(x => x.Id == id);

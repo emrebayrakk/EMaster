@@ -41,5 +41,14 @@ namespace EMaster.API.Controllers
             var response = _categoryService.Create(category);
             return response;
         }
+
+        [HttpPost("Delete/{id}")]
+        [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status404NotFound)]
+        public ApiResponse<long> Delete(int id)
+        {
+            var response = _categoryService.DeleteCategory(id);
+            return response;
+        }
     }
 }

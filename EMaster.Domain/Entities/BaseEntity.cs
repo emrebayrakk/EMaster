@@ -15,5 +15,6 @@ namespace EMaster.Domain.Entities
         public DateTime? UpdatedDate { get; set; }
 
         public DateTime? DeletedDate { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

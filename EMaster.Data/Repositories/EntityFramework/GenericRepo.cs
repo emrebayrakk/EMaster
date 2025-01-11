@@ -46,7 +46,7 @@ namespace EMaster.Data.Repositories.EntityFramework
             }
         }
 
-        public int Delete(long id)
+        public int Delete(int id)
         {
             try
             {

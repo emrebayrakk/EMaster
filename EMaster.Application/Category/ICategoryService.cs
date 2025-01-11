@@ -9,5 +9,6 @@ namespace EMaster.Application.Category
         ApiResponse<Domain.Entities.Category> Update(CategoryRequest categoyInput);
         ApiResponse<List<CategoryResponse>> CategoryList();
         ApiResponse<CategoryResponse> GetCategory(long id);
+        ApiResponse<long> DeleteCategory(int id);
     }
 }
