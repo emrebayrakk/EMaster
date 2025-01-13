@@ -24,8 +24,8 @@ namespace EMaster.API.Controllers
             return _expenseService.ExpenseList();
         }
         [HttpPut("Update")]
-        [ProducesResponseType(typeof(ApiResponse<Domain.Entities.Expense>), StatusCodes.Status200OK)]
-        public ApiResponse<Domain.Entities.Expense> ExpenseUpdate([FromBody] ExpenseRequest expense)
+        [ProducesResponseType(typeof(ApiResponse<ExpenseResponse>), StatusCodes.Status200OK)]
+        public ApiResponse<ExpenseResponse> ExpenseUpdate([FromBody] ExpenseRequest expense)
         {
             return _expenseService.Update(expense);
         }
@@ -36,11 +36,20 @@ namespace EMaster.API.Controllers
             return _expenseService.GetExpense(id);
         }
         [HttpPost("Create")]
-        [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status404NotFound)]
-        public ApiResponse<long> Create([FromBody] ExpenseRequest expense)
+        [ProducesResponseType(typeof(ApiResponse<ExpenseResponse>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<ExpenseResponse>), StatusCodes.Status404NotFound)]
+        public ApiResponse<ExpenseResponse> Create([FromBody] ExpenseRequest expense)
         {
             var response = _expenseService.Create(expense);
+            return response;
+        }
+
+        [HttpDelete("Delete/{id}")]
+        [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status404NotFound)]
+        public ApiResponse<long> Delete(int id)
+        {
+            var response = _expenseService.DeleteExpense(id);
             return response;
         }
     }

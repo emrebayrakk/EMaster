@@ -19,12 +19,12 @@ namespace EMaster.Application.Expense
             return new ApiResponse<List<ExpenseResponse>>(true, ResultCode.Instance.Ok, "Success", result);
         }
 
-        public ApiResponse<long> Create(ExpenseRequest expenseInput)
+        public ApiResponse<ExpenseResponse> Create(ExpenseRequest expenseInput)
         {
-            long id = _expenseRepo.Add(expenseInput);
-            if (id != -1)
-                return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
-            return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
+            var res = _expenseRepo.AddWithReturn(expenseInput);
+            if (res != null)
+                return new ApiResponse<ExpenseResponse>(true, ResultCode.Instance.Ok, "Success", res);
+            return new ApiResponse<ExpenseResponse>(false, ResultCode.Instance.Failed, "ErrorOccured", null);
         }
 
         public ApiResponse<ExpenseResponse> GetExpense(long id)
@@ -33,12 +33,19 @@ namespace EMaster.Application.Expense
             return new ApiResponse<ExpenseResponse>(true, ResultCode.Instance.Ok, "Success", result);
         }
 
-        public ApiResponse<Domain.Entities.Expense> Update(ExpenseRequest expenseInput)
+        public ApiResponse<ExpenseResponse> Update(ExpenseRequest expenseInput)
         {
-            var res = _expenseRepo.UpdateEntity(expenseInput);
+            var res = _expenseRepo.UpdateWithReturn(expenseInput);
             if (res != null)
-                return new ApiResponse<Domain.Entities.Expense>(true, ResultCode.Instance.Ok, "Success", res);
-            return new ApiResponse<Domain.Entities.Expense>(false, ResultCode.Instance.Failed, "ErrorOccured", null);
+                return new ApiResponse<ExpenseResponse>(true, ResultCode.Instance.Ok, "Success", res);
+            return new ApiResponse<ExpenseResponse>(false, ResultCode.Instance.Failed, "ErrorOccured", null);
+        }
+        public ApiResponse<long> DeleteExpense(int id)
+        {
+            var res = _expenseRepo.Delete(id);
+            if (res != -1)
+                return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
+            return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
         }
     }
 }

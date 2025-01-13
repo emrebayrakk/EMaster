@@ -35,9 +35,27 @@ namespace EMaster.Data.Repositories.EntityFramework
             try
             {
                 var mappedEntity = entityInput.Adapt<TEntity>();
+
                 var res = this.entity.Add(mappedEntity);
-                var entityResult = dbContext.SaveChanges();
+                dbContext.SaveChanges();
+
+                var navigations = dbContext.Model.FindEntityType(typeof(TEntity))
+                    ?.GetNavigations();
+
+                if (navigations != null)
+                {
+                    foreach (var navigation in navigations)
+                    {
+                        var navigationEntry = dbContext.Entry(res.Entity).Navigation(navigation.Name);
+                        if (!navigationEntry.IsLoaded)
+                        {
+                            navigationEntry.Load();
+                        }
+                    }
+                }
+
                 var response = res.Entity.Adapt<TEntityOutput>();
+
                 return response;
             }
             catch (Exception ex)
@@ -149,6 +167,37 @@ namespace EMaster.Data.Repositories.EntityFramework
                 this.entity.Attach(entity);
                 dbContext.Entry(entity).State = EntityState.Modified;
                 return dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public TEntityOutput UpdateWithReturn(TEntityInput entity)
+        {
+            try
+            {
+                var mappedEntity = entity.Adapt<TEntity>();
+                var res = this.entity.Attach(mappedEntity);
+                dbContext.Entry(mappedEntity).State = EntityState.Modified;
+                dbContext.SaveChanges();
+                var navigations = dbContext.Model.FindEntityType(typeof(TEntity))
+                    ?.GetNavigations();
+
+                if (navigations != null)
+                {
+                    foreach (var navigation in navigations)
+                    {
+                        var navigationEntry = dbContext.Entry(res.Entity).Navigation(navigation.Name);
+                        if (!navigationEntry.IsLoaded)
+                        {
+                            navigationEntry.Load();
+                        }
+                    }
+                }
+                var response = res.Entity.Adapt<TEntityOutput>();
+
+                return response;
             }
             catch (Exception ex)
             {

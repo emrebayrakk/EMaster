@@ -9,6 +9,7 @@ namespace EMaster.Domain.Interfaces.EntityFramework
         TEntityOutput AddWithReturn(TEntityInput entityInput);
         int Update(TEntity entity);
         TEntity UpdateEntity(TEntityInput entity);
+        TEntityOutput UpdateWithReturn(TEntityInput entity);
         int Delete(int id);
         TEntityOutput FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes);
         List<TEntityOutput> GetAll(bool noTracking = true, params string[] includes);

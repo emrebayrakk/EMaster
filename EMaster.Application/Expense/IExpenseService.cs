@@ -5,9 +5,10 @@ namespace EMaster.Application.Expense
 {
     public interface IExpenseService
     {
-        ApiResponse<long> Create(ExpenseRequest expenseInput);
-        ApiResponse<Domain.Entities.Expense> Update(ExpenseRequest expenseInput);
+        ApiResponse<ExpenseResponse> Create(ExpenseRequest expenseInput);
+        ApiResponse<ExpenseResponse> Update(ExpenseRequest expenseInput);
         ApiResponse<List<ExpenseResponse>> ExpenseList();
         ApiResponse<ExpenseResponse> GetExpense(long id);
+        ApiResponse<long> DeleteExpense(int id);
     }
 }
