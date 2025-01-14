@@ -1,12 +1,14 @@
 ﻿using EMaster.Application.Category;
 using EMaster.Domain.Requests;
 using EMaster.Domain.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EMaster.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;

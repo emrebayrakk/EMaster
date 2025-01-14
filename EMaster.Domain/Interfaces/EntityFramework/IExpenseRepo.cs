@@ -6,5 +6,7 @@ namespace EMaster.Domain.Interfaces.EntityFramework
 {
     public interface IExpenseRepo : IGenericRepo<Expense,ExpenseRequest,ExpenseResponse>
     {
+        decimal GetTotalExpenseAmount();
+        decimal MountlyExpenseAmount();
     }
 }

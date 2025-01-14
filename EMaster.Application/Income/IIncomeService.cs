@@ -9,5 +9,7 @@ namespace EMaster.Application.Income
         ApiResponse<IncomeResponse> Update(IncomeRequest incomeInput);
         ApiResponse<List<IncomeResponse>> IncomeList();
         ApiResponse<IncomeResponse> GetIncome(long id);
+        ApiResponse<IncomeAmountResponse> GetSalaryIncome();
+        ApiResponse<long> DeleteIncome(int id);
     }
 }

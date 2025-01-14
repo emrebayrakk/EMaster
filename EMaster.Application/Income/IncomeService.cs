@@ -40,5 +40,21 @@ namespace EMaster.Application.Income
                 return new ApiResponse<IncomeResponse>(true, ResultCode.Instance.Ok, "Success", res);
             return new ApiResponse<IncomeResponse>(false, ResultCode.Instance.Failed, "ErrorOccured", null);
         }
+
+        public ApiResponse<IncomeAmountResponse> GetSalaryIncome()
+        {
+            var totalIncomeAmount = _incomeRepo.GetTotalIncomeAmount();
+            var monthlyIncomeAmount = _incomeRepo.MountlyIncomeAmount();
+            var res = new IncomeAmountResponse(totalIncomeAmount, monthlyIncomeAmount);
+            return new ApiResponse<IncomeAmountResponse>(true, ResultCode.Instance.Ok, "Success", res);
+        }
+
+        public ApiResponse<long> DeleteIncome(int id)
+        {
+            var res = _incomeRepo.Delete(id);
+            if (res != -1)
+                return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
+            return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
+        }
     }
 }

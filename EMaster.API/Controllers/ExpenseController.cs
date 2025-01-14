@@ -2,12 +2,14 @@
 using EMaster.Application.Expense;
 using EMaster.Domain.Requests;
 using EMaster.Domain.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EMaster.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class ExpenseController : ControllerBase
     {
         private readonly IExpenseService _expenseService;
@@ -51,6 +53,12 @@ namespace EMaster.API.Controllers
         {
             var response = _expenseService.DeleteExpense(id);
             return response;
+        }
+        [HttpGet("GetSalary")]
+        [ProducesResponseType(typeof(ApiResponse<ExpenseAmountResponse>), StatusCodes.Status200OK)]
+        public ApiResponse<ExpenseAmountResponse> GetSalary()
+        {
+            return _expenseService.GetSalaryExpense();
         }
     }
 }

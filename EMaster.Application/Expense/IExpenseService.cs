@@ -10,5 +10,6 @@ namespace EMaster.Application.Expense
         ApiResponse<List<ExpenseResponse>> ExpenseList();
         ApiResponse<ExpenseResponse> GetExpense(long id);
         ApiResponse<long> DeleteExpense(int id);
+        ApiResponse<ExpenseAmountResponse> GetSalaryExpense();
     }
 }

@@ -6,5 +6,7 @@ namespace EMaster.Domain.Interfaces.EntityFramework
 {
     public interface IIncomeRepo : IGenericRepo<Income, IncomeRequest, IncomeResponse>
     {
+        decimal GetTotalIncomeAmount();
+        decimal MountlyIncomeAmount();
     }
 }

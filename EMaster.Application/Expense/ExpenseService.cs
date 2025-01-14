@@ -47,5 +47,13 @@ namespace EMaster.Application.Expense
                 return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
             return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
         }
+
+        public ApiResponse<ExpenseAmountResponse> GetSalaryExpense()
+        {
+            var totalExpenseAmount = _expenseRepo.GetTotalExpenseAmount();
+            var monthlyExpenseAmount = _expenseRepo.MountlyExpenseAmount();
+            var res = new ExpenseAmountResponse(totalExpenseAmount, monthlyExpenseAmount);
+            return new ApiResponse<ExpenseAmountResponse>(true, ResultCode.Instance.Ok, "Success", res);
+        }
     }
 }
