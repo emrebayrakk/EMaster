@@ -2,6 +2,7 @@
 {
     public class IncomeRequest
     {
+        public int? Id { get; set; }
         public int? CategoryID { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;

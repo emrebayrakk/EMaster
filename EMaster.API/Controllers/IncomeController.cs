@@ -24,8 +24,8 @@ namespace EMaster.API.Controllers
             return _incomeService.IncomeList();
         }
         [HttpPut("Update")]
-        [ProducesResponseType(typeof(ApiResponse<Domain.Entities.Income>), StatusCodes.Status200OK)]
-        public ApiResponse<Domain.Entities.Income> IncomeUpdate([FromBody] IncomeRequest income)
+        [ProducesResponseType(typeof(ApiResponse<IncomeResponse>), StatusCodes.Status200OK)]
+        public ApiResponse<IncomeResponse> IncomeUpdate([FromBody] IncomeRequest income)
         {
             return _incomeService.Update(income);
         }
@@ -36,9 +36,9 @@ namespace EMaster.API.Controllers
             return _incomeService.GetIncome(id);
         }
         [HttpPost("Create")]
-        [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status404NotFound)]
-        public ApiResponse<long> Create([FromBody] IncomeRequest income)
+        [ProducesResponseType(typeof(ApiResponse<IncomeResponse>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<IncomeResponse>), StatusCodes.Status404NotFound)]
+        public ApiResponse<IncomeResponse> Create([FromBody] IncomeRequest income)
         {
             var response = _incomeService.Create(income);
             return response;

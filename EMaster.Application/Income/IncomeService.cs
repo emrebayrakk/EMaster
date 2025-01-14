@@ -19,12 +19,12 @@ namespace EMaster.Application.Income
             return new ApiResponse<List<IncomeResponse>>(true, ResultCode.Instance.Ok, "Success", result);
         }
 
-        public ApiResponse<long> Create(IncomeRequest incomeInput)
+        public ApiResponse<IncomeResponse> Create(IncomeRequest incomeInput)
         {
-            long id = _incomeRepo.Add(incomeInput);
-            if (id != -1)
-                return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
-            return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
+            var res = _incomeRepo.AddWithReturn(incomeInput);
+            if (res != null)
+                return new ApiResponse<IncomeResponse>(true, ResultCode.Instance.Ok, "Success", res);
+            return new ApiResponse<IncomeResponse>(false, ResultCode.Instance.Failed, "ErrorOccured", null);
         }
 
         public ApiResponse<IncomeResponse> GetIncome(long id)
@@ -33,12 +33,12 @@ namespace EMaster.Application.Income
             return new ApiResponse<IncomeResponse>(true, ResultCode.Instance.Ok, "Success", result);
         }
 
-        public ApiResponse<Domain.Entities.Income> Update(IncomeRequest incomeInput)
+        public ApiResponse<IncomeResponse> Update(IncomeRequest incomeInput)
         {
-            var res = _incomeRepo.UpdateEntity(incomeInput);
+            var res = _incomeRepo.UpdateWithReturn(incomeInput);
             if (res != null)
-                return new ApiResponse<Domain.Entities.Income>(true, ResultCode.Instance.Ok, "Success", res);
-            return new ApiResponse<Domain.Entities.Income>(false, ResultCode.Instance.Failed, "ErrorOccured", null);
+                return new ApiResponse<IncomeResponse>(true, ResultCode.Instance.Ok, "Success", res);
+            return new ApiResponse<IncomeResponse>(false, ResultCode.Instance.Failed, "ErrorOccured", null);
         }
     }
 }
