@@ -37,6 +37,7 @@ namespace EMaster.API.Controllers
         {
             return _expenseService.GetExpense(id);
         }
+        [AllowAnonymous]
         [HttpPost("Create")]
         [ProducesResponseType(typeof(ApiResponse<ExpenseResponse>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<ExpenseResponse>), StatusCodes.Status404NotFound)]
@@ -59,6 +60,13 @@ namespace EMaster.API.Controllers
         public ApiResponse<ExpenseAmountResponse> GetSalary()
         {
             return _expenseService.GetSalaryExpense();
+        }
+        [AllowAnonymous]
+        [HttpGet("GetExpenseMonthlyCategory")]
+        [ProducesResponseType(typeof(ApiResponse<GetExpenseMonthlyCategoryAmount>), StatusCodes.Status200OK)]
+        public ApiResponse<List<GetExpenseMonthlyCategoryAmount>> GetExpenseMonthlyCategory()
+        {
+            return _expenseService.GetExpenseMonthlyCategory();
         }
     }
 }

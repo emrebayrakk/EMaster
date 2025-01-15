@@ -55,5 +55,11 @@ namespace EMaster.Application.Expense
             var res = new ExpenseAmountResponse(totalExpenseAmount, monthlyExpenseAmount);
             return new ApiResponse<ExpenseAmountResponse>(true, ResultCode.Instance.Ok, "Success", res);
         }
+
+        public ApiResponse<List<GetExpenseMonthlyCategoryAmount>> GetExpenseMonthlyCategory()
+        {
+            var result = _expenseRepo.GetExpenseMonthlyCategoryAmount();
+            return new ApiResponse<List<GetExpenseMonthlyCategoryAmount>>(true, ResultCode.Instance.Ok, "Success", result);
+        }
     }
 }

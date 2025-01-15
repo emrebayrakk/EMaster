@@ -56,5 +56,11 @@ namespace EMaster.Application.Income
                 return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
             return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
         }
+
+        public ApiResponse<List<GetIncomeMonthlyCategoryAmount>> GetIncomeMonthlyCategoryAmount()
+        {
+            var result = _incomeRepo.GetIncomeMonthlyCategoryAmounts();
+            return new ApiResponse<List<GetIncomeMonthlyCategoryAmount>>(true, ResultCode.Instance.Ok, "Success", result);
+        }
     }
 }

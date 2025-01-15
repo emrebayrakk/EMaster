@@ -25,5 +25,33 @@ namespace EMaster.Data.Repositories.EntityFramework
             var res = dbContext.Expenses.Where(x => x.Date.Month == DateTime.Now.Month).Sum(x => x.Amount);
             return res;
         }
+
+        public List<GetExpenseMonthlyCategoryAmount> GetExpenseMonthlyCategoryAmount()
+        {
+            var result = dbContext.Expenses
+             .Where(e => !e.IsDeleted && e.Date.Year == DateTime.Now.Year) 
+             .GroupBy(e => new
+             {
+                 Month = e.Date.Month, 
+                 e.Category.Name     
+             })
+             .Select(g => new
+             {
+                 Month = g.Key.Month,
+                 Category = g.Key.Name,
+                 Amount = g.Sum(e => e.Amount) 
+             })
+             .ToList()
+             .Select(g => new GetExpenseMonthlyCategoryAmount
+             {
+                 Month = new DateTime(1, g.Month, 1).ToString("MMMM"), 
+                 Category = g.Category,
+                 Amount = g.Amount
+             })
+             .ToList();
+
+
+            return result;
+        }
     }
 }

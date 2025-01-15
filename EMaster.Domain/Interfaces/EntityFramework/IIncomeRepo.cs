@@ -8,5 +8,6 @@ namespace EMaster.Domain.Interfaces.EntityFramework
     {
         decimal GetTotalIncomeAmount();
         decimal MountlyIncomeAmount();
+        public List<GetIncomeMonthlyCategoryAmount> GetIncomeMonthlyCategoryAmounts();
     }
 }

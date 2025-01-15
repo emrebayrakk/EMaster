@@ -11,5 +11,6 @@ namespace EMaster.Application.Income
         ApiResponse<IncomeResponse> GetIncome(long id);
         ApiResponse<IncomeAmountResponse> GetSalaryIncome();
         ApiResponse<long> DeleteIncome(int id);
+        ApiResponse<List<GetIncomeMonthlyCategoryAmount>> GetIncomeMonthlyCategoryAmount();
     }
 }

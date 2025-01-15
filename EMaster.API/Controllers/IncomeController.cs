@@ -59,5 +59,12 @@ namespace EMaster.API.Controllers
             var response = _incomeService.DeleteIncome(id);
             return response;
         }
+        [AllowAnonymous]
+        [HttpGet("GetIncomeMonthlyCategory")]
+        [ProducesResponseType(typeof(ApiResponse<GetIncomeMonthlyCategoryAmount>), StatusCodes.Status200OK)]
+        public ApiResponse<List<GetIncomeMonthlyCategoryAmount>> GetIncomeMonthlyCategory()
+        {
+            return _incomeService.GetIncomeMonthlyCategoryAmount();
+        }
     }
 }
