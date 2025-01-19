@@ -13,10 +13,10 @@ namespace EMaster.Application.Category
             _categoryRepo = categoryRepo;
         }
 
-        public ApiResponse<List<CategoryResponse>> CategoryList()
+        public PaginatedResponse<List<CategoryResponse>> CategoryList(int pageNumber, int pageSize, List<ExpressionFilter>? filters)
         {
-            var result = _categoryRepo.GetAll();
-            return new ApiResponse<List<CategoryResponse>>(true, ResultCode.Instance.Ok, "Success", result);
+            var result = _categoryRepo.GetPaginatedDataWithFilter(pageNumber, pageSize, filters);
+            return result;
         }
 
         public ApiResponse<CategoryResponse> Create(CategoryRequest categoyInput)

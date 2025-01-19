@@ -17,11 +17,11 @@ namespace EMaster.API.Controllers
         {
             _categoryService = categoryService;
         }
-        [HttpGet("List")]
+        [HttpPost("List")]
         [ProducesResponseType(typeof(ApiResponse<List<CategoryResponse>>), StatusCodes.Status200OK)]
-        public ApiResponse<List<CategoryResponse>> CategoryList()
+        public PaginatedResponse<List<CategoryResponse>> CategoryList([FromBody] PaginatedRequest request)
         {
-            return _categoryService.CategoryList();
+            return _categoryService.CategoryList(request.pageNumber, request.pageSize, request.filters);
         }
         [HttpPut("Update")]
         [ProducesResponseType(typeof(ApiResponse<Domain.Entities.Category>), StatusCodes.Status200OK)]

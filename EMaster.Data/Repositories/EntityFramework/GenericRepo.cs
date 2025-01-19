@@ -1,8 +1,12 @@
 ﻿using EMaster.Data.Context;
 using EMaster.Domain.Interfaces.EntityFramework;
+using EMaster.Domain.Requests;
+using EMaster.Domain.Responses;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace EMaster.Data.Repositories.EntityFramework
 {
@@ -240,6 +244,35 @@ namespace EMaster.Data.Repositories.EntityFramework
             {
                 throw ex;
             }
+        }
+
+        public PaginatedResponse<List<TEntityOutput>> GetPaginatedDataWithFilter(int pageNumber, int pageSize, List<ExpressionFilter> filters, params string[] includes)
+        {
+            var query = entity.AsNoTracking();
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            if (filters != null && filters.Any())
+            {
+                var expressionTree = ExpressionBuilder.ConstructAndExpressionTree<TEntity>(filters);
+                query = query.Where(expressionTree);
+            }
+            var data = query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+
+            var result = data.Adapt<List<TEntityOutput>>();
+
+            var totalCount = query.Count();
+
+            if (result == null)
+            {
+                return new PaginatedResponse<List<TEntityOutput>>(true, 400, "Error", totalCount, pageNumber, pageSize, null);
+            }
+            return new PaginatedResponse<List<TEntityOutput>>(true,200,"Success",totalCount,pageNumber,pageSize,result);
         }
     }
 }

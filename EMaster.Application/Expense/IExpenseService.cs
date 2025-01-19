@@ -7,7 +7,7 @@ namespace EMaster.Application.Expense
     {
         ApiResponse<ExpenseResponse> Create(ExpenseRequest expenseInput);
         ApiResponse<ExpenseResponse> Update(ExpenseRequest expenseInput);
-        ApiResponse<List<ExpenseResponse>> ExpenseList();
+        PaginatedResponse<List<ExpenseResponse>> ExpenseList(int pageNumber, int pageSize, List<ExpressionFilter> filters);
         ApiResponse<ExpenseResponse> GetExpense(long id);
         ApiResponse<long> DeleteExpense(int id);
         ApiResponse<ExpenseAmountResponse> GetSalaryExpense();

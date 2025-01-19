@@ -13,10 +13,10 @@ namespace EMaster.Application.Income
             _incomeRepo = incomeRepo;
         }
 
-        public ApiResponse<List<IncomeResponse>> IncomeList()
+        public PaginatedResponse<List<IncomeResponse>> IncomeList(int pageNumber, int pageSize, List<ExpressionFilter> filters)
         {
-            var result = _incomeRepo.GetAll(true, "Category");
-            return new ApiResponse<List<IncomeResponse>>(true, ResultCode.Instance.Ok, "Success", result);
+            var result = _incomeRepo.GetPaginatedDataWithFilter(pageNumber, pageSize, filters, "Category");
+            return result;
         }
 
         public ApiResponse<IncomeResponse> Create(IncomeRequest incomeInput)

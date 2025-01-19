@@ -18,11 +18,11 @@ namespace EMaster.API.Controllers
             _incomeService = incomeService;
         }
 
-        [HttpGet("List")]
+        [HttpPost("List")]
         [ProducesResponseType(typeof(ApiResponse<List<IncomeResponse>>), StatusCodes.Status200OK)]
-        public ApiResponse<List<IncomeResponse>> IncomeList()
+        public PaginatedResponse<List<IncomeResponse>> IncomeList([FromBody] PaginatedRequest request)
         {
-            return _incomeService.IncomeList();
+            return _incomeService.IncomeList(request.pageNumber, request.pageSize, request.filters);
         }
         [HttpPut("Update")]
         [ProducesResponseType(typeof(ApiResponse<IncomeResponse>), StatusCodes.Status200OK)]

@@ -19,11 +19,12 @@ namespace EMaster.API.Controllers
             _expenseService = expenseService;
         }
 
-        [HttpGet("List")]
-        [ProducesResponseType(typeof(ApiResponse<List<ExpenseResponse>>), StatusCodes.Status200OK)]
-        public ApiResponse<List<ExpenseResponse>> ExpenseList()
+        [AllowAnonymous]
+        [HttpPost("List")]
+        [ProducesResponseType(typeof(PaginatedResponse<List<ExpenseResponse>>), StatusCodes.Status200OK)]
+        public PaginatedResponse<List<ExpenseResponse>> ExpenseList([FromBody] PaginatedRequest request)
         {
-            return _expenseService.ExpenseList();
+            return _expenseService.ExpenseList(request.pageNumber, request.pageSize, request.filters);
         }
         [HttpPut("Update")]
         [ProducesResponseType(typeof(ApiResponse<ExpenseResponse>), StatusCodes.Status200OK)]

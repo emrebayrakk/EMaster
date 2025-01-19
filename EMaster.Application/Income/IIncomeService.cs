@@ -7,7 +7,7 @@ namespace EMaster.Application.Income
     {
         ApiResponse<IncomeResponse> Create(IncomeRequest incomeInput);
         ApiResponse<IncomeResponse> Update(IncomeRequest incomeInput);
-        ApiResponse<List<IncomeResponse>> IncomeList();
+        PaginatedResponse<List<IncomeResponse>> IncomeList(int pageNumber, int pageSize, List<ExpressionFilter> filters);
         ApiResponse<IncomeResponse> GetIncome(long id);
         ApiResponse<IncomeAmountResponse> GetSalaryIncome();
         ApiResponse<long> DeleteIncome(int id);

@@ -13,10 +13,10 @@ namespace EMaster.Application.Expense
             _expenseRepo = expenseRepo;
         }
 
-        public ApiResponse<List<ExpenseResponse>> ExpenseList()
+        public PaginatedResponse<List<ExpenseResponse>> ExpenseList(int pageNumber, int pageSize, List<ExpressionFilter> filters)
         {
-            var result = _expenseRepo.GetAll(true, "Category");
-            return new ApiResponse<List<ExpenseResponse>>(true, ResultCode.Instance.Ok, "Success", result);
+            var result = _expenseRepo.GetPaginatedDataWithFilter(pageNumber,pageSize,filters,"Category");
+            return result;
         }
 
         public ApiResponse<ExpenseResponse> Create(ExpenseRequest expenseInput)

@@ -7,7 +7,7 @@ namespace EMaster.Application.Category
     {
         ApiResponse<CategoryResponse> Create(CategoryRequest categoyInput);
         ApiResponse<Domain.Entities.Category> Update(CategoryRequest categoyInput);
-        ApiResponse<List<CategoryResponse>> CategoryList();
+        PaginatedResponse<List<CategoryResponse>> CategoryList(int pageNumber, int pageSize, List<ExpressionFilter>? filters);
         ApiResponse<CategoryResponse> GetCategory(long id);
         ApiResponse<long> DeleteCategory(int id);
     }
