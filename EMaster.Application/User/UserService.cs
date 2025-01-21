@@ -24,7 +24,7 @@ namespace EMaster.Application.User
             if (existUser != null)
                 return new ApiResponse<long>(false, ResultCode.Instance.Duplicate, "EmailExist", -1);
 
-            //userInput.PasswordHash = _passwordHasher.Hash(userInput.PasswordHash);
+            userInput.PasswordHash = _passwordHasher.Encrypt(userInput.PasswordHash);
             long id = _userRepository.Add(userInput);
             if (id != -1)
                 return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
@@ -39,8 +39,9 @@ namespace EMaster.Application.User
 
         public ApiResponse<LoginResponse> Login(LoginRequest login)
         {
-            var result = _userRepository.FirstOrDefault(a => a.Email == login.Email && a.PasswordHash == login.Password);
-            if (result is not null /*&& _passwordHasher.Verify(login.Password, result.PasswordHash)*/)
+            var result = _userRepository.FirstOrDefault(a => a.Email == login.Email);
+            var passwordVerify = _passwordHasher.Verify(login.Password, result.PasswordHash);
+            if (result is not null && passwordVerify)
             {
                 var token = _jwtProvider.CreateToken(result);
                 LoginResponse response = new LoginResponse

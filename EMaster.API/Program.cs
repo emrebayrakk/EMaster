@@ -41,7 +41,7 @@ builder.Services.AddScoped<IIncomeRepo, IncomeRepo>();
 builder.Services.AddScoped<IIncomeService, IncomeService>();
 
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
-builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 #endregion
 
 

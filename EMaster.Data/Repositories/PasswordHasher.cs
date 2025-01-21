@@ -6,26 +6,62 @@ namespace EMaster.Data.Repositories
 {
     public class PasswordHasher : IPasswordHasher
     {
-        private const int SaltSize = 128 / 8;
-        private const int HashSize = 256 / 8;
-        private const int Iterations = 10000;
-        private static readonly HashAlgorithmName Algorithm = HashAlgorithmName.SHA256;
-        private const string Delimiter = ":";
-        public string Hash(string password)
-        {
-            var salt = RandomNumberGenerator.GetBytes(SaltSize);
-            var hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, Algorithm, HashSize);
+        private readonly byte[] _key;
+        private readonly byte[] _iv;
 
-            return string.Join(Delimiter,Convert.ToBase64String(salt), Convert.ToBase64String(hash));
+        public PasswordHasher()
+        {
+            _key = Encoding.UTF8.GetBytes("Your16CharKey123"); 
+            _iv = Encoding.UTF8.GetBytes("Your16CharIV1234"); 
         }
 
-        public bool Verify(string password, string passwordHash)
+        public string Encrypt(string plainText)
         {
-            var parts = passwordHash.Split(Delimiter);
-            var salt = Convert.FromBase64String(parts[0]);
-            var hash = Convert.FromBase64String(parts[1]);
-            var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, Algorithm, HashSize);
-            return CryptographicOperations.FixedTimeEquals(hash, hashToCompare);
+            if (string.IsNullOrEmpty(plainText))
+                throw new ArgumentNullException(nameof(plainText));
+
+            using (var aes = Aes.Create())
+            {
+                aes.Key = _key;
+                aes.IV = _iv;
+
+                using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+                using (var ms = new MemoryStream())
+                {
+                    using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    using (var writer = new StreamWriter(cs))
+                    {
+                        writer.Write(plainText);
+                    }
+                    return Convert.ToBase64String(ms.ToArray());
+                }
+            }
+        }
+
+        public string Decrypt(string cipherText)
+        {
+            if (string.IsNullOrEmpty(cipherText))
+                throw new ArgumentNullException(nameof(cipherText));
+
+            using (var aes = Aes.Create())
+            {
+                aes.Key = _key;
+                aes.IV = _iv;
+
+                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                using (var ms = new MemoryStream(Convert.FromBase64String(cipherText)))
+                using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                using (var reader = new StreamReader(cs))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+
+        public bool Verify(string password, string hash)
+        {
+            var decrypted = Decrypt(hash);
+            return password == decrypted;
         }
     }
 }

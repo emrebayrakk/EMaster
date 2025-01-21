@@ -8,7 +8,8 @@ namespace EMaster.Domain.Interfaces
 {
     public interface IPasswordHasher
     {
-        string Hash(string password);
+        string Encrypt(string plainText);
+        string Decrypt(string cipherText);
         bool Verify(string password, string hash);
     }
 }

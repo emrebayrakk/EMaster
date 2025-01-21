@@ -23,8 +23,8 @@ namespace EMaster.API.Middlewares
                         factory: partition => new FixedWindowRateLimiterOptions
                         {
                             AutoReplenishment = true,
-                            PermitLimit = 3,
-                            Window = TimeSpan.FromMilliseconds(3000)
+                            PermitLimit = 10,
+                            Window = TimeSpan.FromMilliseconds(300)
                         }
                     ));
 
