@@ -19,6 +19,7 @@ namespace EMaster.Application.Expense
             return result;
         }
 
+
         public ApiResponse<ExpenseResponse> Create(ExpenseRequest expenseInput)
         {
             var res = _expenseRepo.AddWithReturn(expenseInput);
