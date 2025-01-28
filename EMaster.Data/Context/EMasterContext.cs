@@ -88,7 +88,7 @@ namespace EMaster.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connStr = "Data Source=DESKTOP-P87BUPQ;" +
+            var connStr = "Data Source=DESKTOP-9GC4MBM\\SQLEXPRESS;" +
                 "Initial Catalog=EMasterAppDb;Integrated Security=True;" +
                 "Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;" +
                 "Application Intent=ReadWrite;Multi Subnet Failover=False";
