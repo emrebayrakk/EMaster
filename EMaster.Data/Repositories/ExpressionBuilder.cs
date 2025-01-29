@@ -1,6 +1,7 @@
 ﻿using EMaster.Domain.Requests;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.Json;
 
 namespace EMaster.Data.Repositories
 {
@@ -37,7 +38,26 @@ namespace EMaster.Data.Repositories
             MethodInfo endsWithMethod = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
 
             MemberExpression member = Expression.Property(param, filter.PropertyName);
-            ConstantExpression constant = Expression.Constant(filter.Value);
+
+            // `Value` JsonElement ise, uygun türe dönüştür
+            object filterValue;
+            if (filter.Value is JsonElement jsonElement)
+            {
+                if (member.Type == typeof(int))
+                    filterValue = jsonElement.GetInt32();
+                else if (member.Type == typeof(decimal))
+                    filterValue = jsonElement.GetDecimal();
+                else if (member.Type == typeof(DateTime))
+                    filterValue = jsonElement.GetDateTime();
+                else
+                    filterValue = jsonElement.ToString();
+            }
+            else
+            {
+                filterValue = filter.Value;
+            }
+
+            ConstantExpression constant = Expression.Constant(filterValue, member.Type);
 
             switch (filter.Comparison)
             {
@@ -54,11 +74,20 @@ namespace EMaster.Data.Repositories
                 case Comparison.NotEqual:
                     return Expression.NotEqual(member, constant);
                 case Comparison.Contains:
-                    return Expression.Call(member, containsMethod, constant);
+                    if (member.Type == typeof(string))
+                        return Expression.Call(member, containsMethod, constant);
+                    else
+                        throw new ArgumentException("Contains sadece string alanlar için kullanılabilir.");
                 case Comparison.StartsWith:
-                    return Expression.Call(member, startsWithMethod, constant);
+                    if (member.Type == typeof(string))
+                        return Expression.Call(member, startsWithMethod, constant);
+                    else
+                        throw new ArgumentException("StartsWith sadece string alanlar için kullanılabilir.");
                 case Comparison.EndsWith:
-                    return Expression.Call(member, endsWithMethod, constant);
+                    if (member.Type == typeof(string))
+                        return Expression.Call(member, endsWithMethod, constant);
+                    else
+                        throw new ArgumentException("EndsWith sadece string alanlar için kullanılabilir.");
                 default:
                     return null;
             }
