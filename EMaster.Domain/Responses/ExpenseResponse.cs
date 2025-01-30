@@ -3,6 +3,7 @@
     public class ExpenseResponse
     {
         public int Id { get; set; }
+        public int CompanyId { get; set; }
         public int CategoryID { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }

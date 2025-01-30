@@ -22,7 +22,7 @@ namespace EMaster.API.Controllers
         [ProducesResponseType(typeof(ApiResponse<List<IncomeResponse>>), StatusCodes.Status200OK)]
         public PaginatedResponse<List<IncomeResponse>> IncomeList([FromBody] PaginatedRequest request)
         {
-            return _incomeService.IncomeList(request.pageNumber, request.pageSize, request.filters);
+            return _incomeService.IncomeList(request.companyId,request.pageNumber, request.pageSize, request.filters);
         }
         [HttpPut("Update")]
         [ProducesResponseType(typeof(ApiResponse<IncomeResponse>), StatusCodes.Status200OK)]
@@ -36,11 +36,11 @@ namespace EMaster.API.Controllers
         {
             return _incomeService.GetIncome(id);
         }
-        [HttpGet("GetSalary")]
+        [HttpPost("GetSalary")]
         [ProducesResponseType(typeof(ApiResponse<IncomeAmountResponse>), StatusCodes.Status200OK)]
-        public ApiResponse<IncomeAmountResponse> GetSalary()
+        public ApiResponse<IncomeAmountResponse> GetSalary([FromBody] CompanyByIdRequest req)
         {
-            return _incomeService.GetSalaryIncome();
+            return _incomeService.GetSalaryIncome(req.companyId);
         }
         [HttpPost("Create")]
         [ProducesResponseType(typeof(ApiResponse<IncomeResponse>), StatusCodes.Status201Created)]
@@ -60,11 +60,11 @@ namespace EMaster.API.Controllers
             return response;
         }
         [AllowAnonymous]
-        [HttpGet("GetIncomeMonthlyCategory")]
+        [HttpPost("GetIncomeMonthlyCategory")]
         [ProducesResponseType(typeof(ApiResponse<GetIncomeMonthlyCategoryAmount>), StatusCodes.Status200OK)]
-        public ApiResponse<List<GetIncomeMonthlyCategoryAmount>> GetIncomeMonthlyCategory()
+        public ApiResponse<List<GetIncomeMonthlyCategoryAmount>> GetIncomeMonthlyCategory([FromBody] CompanyByIdRequest req)
         {
-            return _incomeService.GetIncomeMonthlyCategoryAmount();
+            return _incomeService.GetIncomeMonthlyCategoryAmount(req.companyId);
         }
     }
 }

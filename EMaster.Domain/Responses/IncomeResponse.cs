@@ -5,6 +5,7 @@ namespace EMaster.Domain.Responses
     public class IncomeResponse
     {
         public int Id { get; set; }
+        public int CompanyId { get; set; }
         public int CategoryID { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }

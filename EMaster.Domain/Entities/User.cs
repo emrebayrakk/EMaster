@@ -23,5 +23,8 @@ namespace EMaster.Domain.Entities
 
         [Required]
         public string PasswordHash { get; set; } = string.Empty;
+
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
     }
 }

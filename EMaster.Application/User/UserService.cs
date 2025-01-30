@@ -8,26 +8,47 @@ namespace EMaster.Application.User
     public class UserService : IUserService
     {
         private readonly IUserRepo _userRepository;
+        private readonly ICompanyRepo _companyRepo;
         private readonly IJwtProvider _jwtProvider;
         private readonly IPasswordHasher _passwordHasher;
 
-        public UserService(IUserRepo userRepository, IJwtProvider jwtProvider, IPasswordHasher passwordHasher)
+        public UserService(IUserRepo userRepository, IJwtProvider jwtProvider, IPasswordHasher passwordHasher, ICompanyRepo companyRepo)
         {
             _userRepository = userRepository;
             _jwtProvider = jwtProvider;
             _passwordHasher = passwordHasher;
+            _companyRepo = companyRepo;
         }
 
-        public ApiResponse<long> Create(UserRequest userInput)
+        public ApiResponse<long> Create(RegisterRequest request)
         {
-            var existUser = _userRepository.FirstOrDefaultAsync(x => x.Email == userInput.Email);
+            var existUser = _userRepository.FirstOrDefaultAsync(x => x.Email == request.Email);
             if (existUser != null)
                 return new ApiResponse<long>(false, ResultCode.Instance.Duplicate, "EmailExist", -1);
 
-            userInput.PasswordHash = _passwordHasher.Encrypt(userInput.PasswordHash);
-            long id = _userRepository.Add(userInput);
-            if (id != -1)
-                return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
+            request.PasswordHash = _passwordHasher.Encrypt(request.PasswordHash);
+
+            var companyReq = new CompanyRequest
+            {
+                Name = request.CompanyName
+            };
+            var res = _companyRepo.AddEntity(companyReq);
+            if(res != null)
+            {
+                var userReq = new UserRequest
+                {
+                    Email = request.Email,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    PasswordHash = request.PasswordHash,
+                    Username = request.Username,
+                    CompanyId = res.Id,
+                };
+                long id = _userRepository.Add(userReq);
+                if (id != -1)
+                    return new ApiResponse<long>(true, ResultCode.Instance.Ok, "Success", id);
+                return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
+            }
             return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
         }
 
@@ -39,7 +60,7 @@ namespace EMaster.Application.User
 
         public ApiResponse<LoginResponse> Login(LoginRequest login)
         {
-            var result = _userRepository.FirstOrDefault(a => a.Email == login.Email);
+            var result = _userRepository.FirstOrDefault(a => a.Email == login.Email,true,a=>a.Company);
             var passwordVerify = _passwordHasher.Verify(login.Password, result.PasswordHash);
             if (result is not null && passwordVerify)
             {
@@ -53,6 +74,8 @@ namespace EMaster.Application.User
                         LastName = result.LastName,
                         Id = result.Id,
                         Username = result.Username,
+                        CompanyId = result.CompanyId,
+                        CompanyName = result.Company.Name
                     },
                     Token = token
                 };

@@ -7,11 +7,11 @@ namespace EMaster.Application.Expense
     {
         ApiResponse<ExpenseResponse> Create(ExpenseRequest expenseInput);
         ApiResponse<ExpenseResponse> Update(ExpenseRequest expenseInput);
-        PaginatedResponse<List<ExpenseResponse>> ExpenseList(int pageNumber, int pageSize, List<ExpressionFilter> filters);
+        PaginatedResponse<List<ExpenseResponse>> ExpenseList(int? companyId, int pageNumber, int pageSize, List<ExpressionFilter> filters);
         ApiResponse<ExpenseResponse> GetExpense(long id);
         ApiResponse<long> DeleteExpense(int id);
-        ApiResponse<ExpenseAmountResponse> GetSalaryExpense();
-        ApiResponse<List<GetExpenseMonthlyCategoryAmount>> GetExpenseMonthlyCategory();
+        ApiResponse<ExpenseAmountResponse> GetSalaryExpense(int companyId);
+        ApiResponse<List<GetExpenseMonthlyCategoryAmount>> GetExpenseMonthlyCategory(int companyId);
         
     }
 }

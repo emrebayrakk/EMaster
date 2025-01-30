@@ -2,6 +2,7 @@ using EMaster.API.Middlewares;
 using EMaster.API.OptionsSetup;
 using EMaster.Application.Authentication;
 using EMaster.Application.Category;
+using EMaster.Application.Company;
 using EMaster.Application.Expense;
 using EMaster.Application.Income;
 using EMaster.Application.User;
@@ -39,6 +40,9 @@ builder.Services.AddScoped<IExpenseService, ExpenseService>();
 
 builder.Services.AddScoped<IIncomeRepo, IncomeRepo>();
 builder.Services.AddScoped<IIncomeService, IncomeService>();
+
+builder.Services.AddScoped<ICompanyRepo, CompanyRepo>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
 
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();

@@ -7,10 +7,10 @@ namespace EMaster.Application.Income
     {
         ApiResponse<IncomeResponse> Create(IncomeRequest incomeInput);
         ApiResponse<IncomeResponse> Update(IncomeRequest incomeInput);
-        PaginatedResponse<List<IncomeResponse>> IncomeList(int pageNumber, int pageSize, List<ExpressionFilter> filters);
+        PaginatedResponse<List<IncomeResponse>> IncomeList(int? companyId, int pageNumber, int pageSize, List<ExpressionFilter> filters);
         ApiResponse<IncomeResponse> GetIncome(long id);
-        ApiResponse<IncomeAmountResponse> GetSalaryIncome();
+        ApiResponse<IncomeAmountResponse> GetSalaryIncome(int companyId);
         ApiResponse<long> DeleteIncome(int id);
-        ApiResponse<List<GetIncomeMonthlyCategoryAmount>> GetIncomeMonthlyCategoryAmount();
+        ApiResponse<List<GetIncomeMonthlyCategoryAmount>> GetIncomeMonthlyCategoryAmount(int companyId);
     }
 }

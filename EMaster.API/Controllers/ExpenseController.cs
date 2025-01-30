@@ -24,7 +24,7 @@ namespace EMaster.API.Controllers
         [ProducesResponseType(typeof(PaginatedResponse<List<ExpenseResponse>>), StatusCodes.Status200OK)]
         public PaginatedResponse<List<ExpenseResponse>> ExpenseList([FromBody] PaginatedRequest request)
         {
-            return _expenseService.ExpenseList(request.pageNumber, request.pageSize, request.filters);
+            return _expenseService.ExpenseList(request.companyId,request.pageNumber, request.pageSize, request.filters);
         }
         [HttpPut("Update")]
         [ProducesResponseType(typeof(ApiResponse<ExpenseResponse>), StatusCodes.Status200OK)]
@@ -56,18 +56,18 @@ namespace EMaster.API.Controllers
             var response = _expenseService.DeleteExpense(id);
             return response;
         }
-        [HttpGet("GetSalary")]
+        [HttpPost("GetSalary")]
         [ProducesResponseType(typeof(ApiResponse<ExpenseAmountResponse>), StatusCodes.Status200OK)]
-        public ApiResponse<ExpenseAmountResponse> GetSalary()
+        public ApiResponse<ExpenseAmountResponse> GetSalary([FromBody] CompanyByIdRequest req)
         {
-            return _expenseService.GetSalaryExpense();
+            return _expenseService.GetSalaryExpense(req.companyId);
         }
         [AllowAnonymous]
-        [HttpGet("GetExpenseMonthlyCategory")]
+        [HttpPost("GetExpenseMonthlyCategory")]
         [ProducesResponseType(typeof(ApiResponse<GetExpenseMonthlyCategoryAmount>), StatusCodes.Status200OK)]
-        public ApiResponse<List<GetExpenseMonthlyCategoryAmount>> GetExpenseMonthlyCategory()
+        public ApiResponse<List<GetExpenseMonthlyCategoryAmount>> GetExpenseMonthlyCategory([FromBody] CompanyByIdRequest req)
         {
-            return _expenseService.GetExpenseMonthlyCategory();
+            return _expenseService.GetExpenseMonthlyCategory(req.companyId);
         }
     }
 }

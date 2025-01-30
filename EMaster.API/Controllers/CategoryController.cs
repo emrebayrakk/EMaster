@@ -21,7 +21,7 @@ namespace EMaster.API.Controllers
         [ProducesResponseType(typeof(ApiResponse<List<CategoryResponse>>), StatusCodes.Status200OK)]
         public PaginatedResponse<List<CategoryResponse>> CategoryList([FromBody] PaginatedRequest request)
         {
-            return _categoryService.CategoryList(request.pageNumber, request.pageSize, request.filters);
+            return _categoryService.CategoryList(request.companyId, request.pageNumber, request.pageSize, request.filters);
         }
         [HttpPut("Update")]
         [ProducesResponseType(typeof(ApiResponse<Domain.Entities.Category>), StatusCodes.Status200OK)]

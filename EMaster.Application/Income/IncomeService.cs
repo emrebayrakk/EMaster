@@ -13,8 +13,22 @@ namespace EMaster.Application.Income
             _incomeRepo = incomeRepo;
         }
 
-        public PaginatedResponse<List<IncomeResponse>> IncomeList(int pageNumber, int pageSize, List<ExpressionFilter> filters)
+        public PaginatedResponse<List<IncomeResponse>> IncomeList(int? companyId, int pageNumber, int pageSize, List<ExpressionFilter> filters)
         {
+            if (companyId == null || companyId == 0)
+            {
+                return new PaginatedResponse<List<IncomeResponse>>(false, 404, "Company not found", 0, pageNumber, pageSize, null);
+            }
+            if (filters == null)
+            {
+                filters = new List<ExpressionFilter>();
+            }
+            filters.Add(new ExpressionFilter
+            {
+                PropertyName = "CompanyId",
+                Comparison = Comparison.Equal,
+                Value = companyId
+            });
             var result = _incomeRepo.GetPaginatedDataWithFilter(pageNumber, pageSize, filters, "Category");
             return result;
         }
@@ -41,10 +55,10 @@ namespace EMaster.Application.Income
             return new ApiResponse<IncomeResponse>(false, ResultCode.Instance.Failed, "ErrorOccured", null);
         }
 
-        public ApiResponse<IncomeAmountResponse> GetSalaryIncome()
+        public ApiResponse<IncomeAmountResponse> GetSalaryIncome(int companyId)
         {
-            var totalIncomeAmount = _incomeRepo.GetTotalIncomeAmount();
-            var monthlyIncomeAmount = _incomeRepo.MountlyIncomeAmount();
+            var totalIncomeAmount = _incomeRepo.GetTotalIncomeAmount(companyId);
+            var monthlyIncomeAmount = _incomeRepo.MountlyIncomeAmount(companyId);
             var res = new IncomeAmountResponse(totalIncomeAmount, monthlyIncomeAmount);
             return new ApiResponse<IncomeAmountResponse>(true, ResultCode.Instance.Ok, "Success", res);
         }
@@ -57,9 +71,9 @@ namespace EMaster.Application.Income
             return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
         }
 
-        public ApiResponse<List<GetIncomeMonthlyCategoryAmount>> GetIncomeMonthlyCategoryAmount()
+        public ApiResponse<List<GetIncomeMonthlyCategoryAmount>> GetIncomeMonthlyCategoryAmount(int companyId)
         {
-            var result = _incomeRepo.GetIncomeMonthlyCategoryAmounts();
+            var result = _incomeRepo.GetIncomeMonthlyCategoryAmounts(companyId);
             return new ApiResponse<List<GetIncomeMonthlyCategoryAmount>>(true, ResultCode.Instance.Ok, "Success", result);
         }
     }

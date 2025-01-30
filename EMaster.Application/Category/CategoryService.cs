@@ -13,8 +13,22 @@ namespace EMaster.Application.Category
             _categoryRepo = categoryRepo;
         }
 
-        public PaginatedResponse<List<CategoryResponse>> CategoryList(int pageNumber, int pageSize, List<ExpressionFilter>? filters)
+        public PaginatedResponse<List<CategoryResponse>> CategoryList(int? companyId, int pageNumber, int pageSize, List<ExpressionFilter>? filters)
         {
+            if (companyId == null || companyId == 0)
+            {
+                return new PaginatedResponse<List<CategoryResponse>>(false, 404, "Company not found", 0, pageNumber, pageSize, null);
+            }
+            if (filters == null)
+            {
+                filters = new List<ExpressionFilter>();
+            }
+            filters.Add(new ExpressionFilter
+            {
+                PropertyName = "CompanyId",
+                Comparison = Comparison.Equal,
+                Value = companyId
+            });
             var result = _categoryRepo.GetPaginatedDataWithFilter(pageNumber, pageSize, filters);
             return result;
         }

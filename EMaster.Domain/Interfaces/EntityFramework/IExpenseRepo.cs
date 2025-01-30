@@ -6,8 +6,8 @@ namespace EMaster.Domain.Interfaces.EntityFramework
 {
     public interface IExpenseRepo : IGenericRepo<Expense,ExpenseRequest,ExpenseResponse>
     {
-        decimal GetTotalExpenseAmount();
-        decimal MountlyExpenseAmount();
-        public List<GetExpenseMonthlyCategoryAmount> GetExpenseMonthlyCategoryAmount();
+        decimal GetTotalExpenseAmount(int companyId);
+        decimal MountlyExpenseAmount(int companyId);
+        public List<GetExpenseMonthlyCategoryAmount> GetExpenseMonthlyCategoryAmount(int companyId);
     }
 }

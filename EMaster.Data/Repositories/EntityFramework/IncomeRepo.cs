@@ -14,22 +14,22 @@ namespace EMaster.Data.Repositories.EntityFramework
             this.dbContext = dbContext;
         }
 
-        public decimal GetTotalIncomeAmount()
+        public decimal GetTotalIncomeAmount(int companyId)
         {
-            var res = dbContext.Incomes.Sum(x => x.Amount);
+            var res = dbContext.Incomes.Where(a=>a.CompanyId== companyId).Sum(x => x.Amount);
             return res;
         }
 
-        public decimal MountlyIncomeAmount()
+        public decimal MountlyIncomeAmount(int companyId)
         {
-            var res = dbContext.Incomes.Where(x => x.Date.Month == DateTime.Now.Month).Sum(x => x.Amount);
+            var res = dbContext.Incomes.Where(x => x.Date.Month == DateTime.Now.Month && x.CompanyId == companyId).Sum(x => x.Amount);
             return res;
         }
 
-        public List<GetIncomeMonthlyCategoryAmount> GetIncomeMonthlyCategoryAmounts()
+        public List<GetIncomeMonthlyCategoryAmount> GetIncomeMonthlyCategoryAmounts(int companyId)
         {
             var result = dbContext.Incomes
-             .Where(e => !e.IsDeleted && e.Date.Year == DateTime.Now.Year)
+             .Where(e => !e.IsDeleted && e.Date.Year == DateTime.Now.Year && e.CompanyId == companyId)
              .GroupBy(e => new
              {
                  Month = e.Date.Month,

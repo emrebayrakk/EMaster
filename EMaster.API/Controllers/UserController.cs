@@ -42,7 +42,7 @@ namespace EMaster.API.Controllers
         [HttpPost("register")]
         [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status404NotFound)]
-        public ApiResponse<long> Create([FromBody] UserRequest user)
+        public ApiResponse<long> Create([FromBody] RegisterRequest user)
         {
             var response = _userService.Create(user);
             return response;

@@ -13,8 +13,23 @@ namespace EMaster.Application.Expense
             _expenseRepo = expenseRepo;
         }
 
-        public PaginatedResponse<List<ExpenseResponse>> ExpenseList(int pageNumber, int pageSize, List<ExpressionFilter> filters)
+        public PaginatedResponse<List<ExpenseResponse>> ExpenseList(int? companyId, int pageNumber, int pageSize, List<ExpressionFilter> filters)
         {
+
+            if (companyId == null || companyId == 0)
+            {
+                return new PaginatedResponse<List<ExpenseResponse>>(false, 404, "Company not found", 0, pageNumber, pageSize, null);
+            }
+            if (filters == null)
+            {
+                filters = new List<ExpressionFilter>();
+            }
+            filters.Add(new ExpressionFilter
+            {
+                PropertyName = "CompanyId",
+                Comparison = Comparison.Equal,
+                Value = companyId
+            });
             var result = _expenseRepo.GetPaginatedDataWithFilter(pageNumber,pageSize,filters,"Category");
             return result;
         }
@@ -49,17 +64,17 @@ namespace EMaster.Application.Expense
             return new ApiResponse<long>(false, ResultCode.Instance.Failed, "ErrorOccured", -1);
         }
 
-        public ApiResponse<ExpenseAmountResponse> GetSalaryExpense()
+        public ApiResponse<ExpenseAmountResponse> GetSalaryExpense(int companyId)
         {
-            var totalExpenseAmount = _expenseRepo.GetTotalExpenseAmount();
-            var monthlyExpenseAmount = _expenseRepo.MountlyExpenseAmount();
+            var totalExpenseAmount = _expenseRepo.GetTotalExpenseAmount(companyId);
+            var monthlyExpenseAmount = _expenseRepo.MountlyExpenseAmount(companyId);
             var res = new ExpenseAmountResponse(totalExpenseAmount, monthlyExpenseAmount);
             return new ApiResponse<ExpenseAmountResponse>(true, ResultCode.Instance.Ok, "Success", res);
         }
 
-        public ApiResponse<List<GetExpenseMonthlyCategoryAmount>> GetExpenseMonthlyCategory()
+        public ApiResponse<List<GetExpenseMonthlyCategoryAmount>> GetExpenseMonthlyCategory(int companyId)
         {
-            var result = _expenseRepo.GetExpenseMonthlyCategoryAmount();
+            var result = _expenseRepo.GetExpenseMonthlyCategoryAmount(companyId);
             return new ApiResponse<List<GetExpenseMonthlyCategoryAmount>>(true, ResultCode.Instance.Ok, "Success", result);
         }
     }
