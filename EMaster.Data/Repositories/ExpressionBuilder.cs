@@ -24,7 +24,7 @@ namespace EMaster.Data.Repositories
                 exp = GetExpression<T>(param, filters[0]);
                 for (int i = 1; i < filters.Count; i++)
                 {
-                    exp = Expression.Or(exp, GetExpression<T>(param, filters[i]));
+                    exp = Expression.And(exp, GetExpression<T>(param, filters[i]));
                 }
             }
 
