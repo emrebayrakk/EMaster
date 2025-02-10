@@ -27,23 +27,23 @@ If you are using or like this project, you can support it by giving a star. Than
 It is a simple user and company based income and expense project. Page views are as follows.
 
 ## login page
-![loginpage](https://github.com/emrebayrakk/EMaster/tree/master/frontend/public/login.PNG)
+![loginpage](https://github.com/emrebayrakk/EMaster/blob/master/frontend/public/login.PNG)
 
 ## register page
-![registerpage](https://github.com/emrebayrakk/EMaster/tree/master/frontend/public/register.PNG)
+![registerpage](https://github.com/emrebayrakk/EMaster/blob/master/frontend/public/register.PNG)
 
 ## dashboard page
-![dashboardpage](https://github.com/emrebayrakk/EMaster/tree/master/frontend/public/dashboard.PNG)
+![dashboardpage](https://github.com/emrebayrakk/EMaster/blob/master/frontend/public/dashboard.PNG)
 
 ## category page
-![categorypage](https://github.com/emrebayrakk/EMaster/tree/master/frontend/public/category.PNG)
+![categorypage](https://github.com/emrebayrakk/EMaster/blob/master/frontend/public/category.PNG)
 
 ## expense page
-![expensepage](https://github.com/emrebayrakk/EMaster/tree/master/frontend/public/expense.png)
+![expensepage](https://github.com/emrebayrakk/EMaster/blob/master/frontend/public/expense.PNG)
 
 ## income page
-![incomepage](https://github.com/emrebayrakk/EMaster/tree/master/frontend/public/income.png)
+![incomepage](https://github.com/emrebayrakk/EMaster/blob/master/frontend/public/income.PNG)
 
 ## ai page
-![aipage](https://github.com/emrebayrakk/EMaster/tree/master/frontend/public/ai.PNG)
+![aipage](https://github.com/emrebayrakk/EMaster/blob/master/frontend/public/ai.PNG)
 
