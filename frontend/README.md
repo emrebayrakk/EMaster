@@ -15,6 +15,7 @@ If you are using or like this project, you can support it by giving a star. Than
 
 - reduxjs/toolkit
 - recharts
+- tailwindcss
 - axios
 - react-icons
 - framer-motion
