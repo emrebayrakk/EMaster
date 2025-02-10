@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EMaster.Data.Repositories
+namespace EMaster.Infrastructure.Repositories
 {
     public class PasswordHasher : IPasswordHasher
     {

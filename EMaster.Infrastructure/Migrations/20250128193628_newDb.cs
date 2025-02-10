@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace EMaster.Data.Migrations
+namespace EMaster.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class newDb : Migration

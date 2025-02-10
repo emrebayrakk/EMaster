@@ -3,7 +3,7 @@ using EMaster.Domain.Requests;
 using EMaster.Domain.Responses;
 using Mapster;
 
-namespace EMaster.Data.Mappings
+namespace EMaster.Infrastructure.Mappings
 {
     public static class MapsterConfiguration
     {

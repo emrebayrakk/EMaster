@@ -1,4 +1,4 @@
-﻿using EMaster.Data.Context;
+﻿using EMaster.Infrastructure.Context;
 using EMaster.Domain.Interfaces.EntityFramework;
 using EMaster.Domain.Requests;
 using EMaster.Domain.Responses;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 
-namespace EMaster.Data.Repositories.EntityFramework
+namespace EMaster.Infrastructure.Repositories.EntityFramework
 {
     public class GenericRepo<TEntity, TEntityInput, TEntityOutput> : IGenericRepo<TEntity, TEntityInput, TEntityOutput> where TEntity : class
     {

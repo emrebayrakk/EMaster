@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EMaster.Application\EMaster.Application.csproj" />
-    <ProjectReference Include="..\EMaster.Data\EMaster.Data.csproj" />
+    <ProjectReference Include="..\EMaster.Infrastructure\EMaster.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

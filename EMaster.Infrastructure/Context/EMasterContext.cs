@@ -1,7 +1,7 @@
 ﻿using EMaster.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace EMaster.Data.Context
+namespace EMaster.Infrastructure.Context
 {
     public class EMasterContext : DbContext
     {
@@ -121,7 +121,7 @@ namespace EMaster.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connStr = "Data Source=DESKTOP-9GC4MBM\\SQLEXPRESS;" +
+            var connStr = "Data Source=EMRE\\SQLEXPRESS;" +
                 "Initial Catalog=EMasterAppDb;Integrated Security=True;" +
                 "Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;" +
                 "Application Intent=ReadWrite;Multi Subnet Failover=False";

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace EMaster.Data.Migrations
+namespace EMaster.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class mg4 : Migration
