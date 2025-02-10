@@ -12,7 +12,7 @@ The project currently uses .NET version 9.
 It is a simple user and company based income and expenditure project. An api has been designed to easily manage income and expense data in a categorised manner.
 Scalar page view is as follows.
 
-![api](https://github.com/emrebayrakk/EMaster/blob/master/EMaster.Infrastructure/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-01-06%20205601.PNG)
+![api](https://github.com/emrebayrakk/EMaster/blob/master/backend/EMaster.Infrastructure/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-01-06%20205601.PNG)
 
 # Libraries Used in the Project
 
@@ -24,5 +24,5 @@ Scalar page view is as follows.
 - Scalar
 
 The project is initially configured with MSSQL. If you want to continue with MSSQL, adjust the ConnectionStrings section in the **appsetting.json** file according to your settings.
-![sql](https://github.com/emrebayrakk/EMaster/blob/master/EMaster.Infrastructure/sql.PNG)
+![sql](https://github.com/emrebayrakk/EMaster/blob/master/backend/EMaster.Infrastructure/sql.PNG)
 
