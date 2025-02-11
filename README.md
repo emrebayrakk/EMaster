@@ -74,6 +74,9 @@ It is a simple user and company based income and expense project. Page views are
 
 ### Installation and Use
 
+The project is initially configured with the base api url via api.js. If your api url is different, don't forget to change it.
+![apijs](https://github.com/emrebayrakk/EMaster/blob/master/backend/EMaster.Infrastructure/apijs.PNG)
+
 1. Clone the repo:
    ``` 
    git clone https://github.com/emrebayrakk/EMaster.git
