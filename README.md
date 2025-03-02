@@ -37,7 +37,7 @@ Scaler page view is as follows.
 1. Clone the repo:
    ``` 
    git clone https://github.com/emrebayrakk/EMaster.git
-   cd EMaster
+   cd backend
    ```
 
 The project is initially configured with MSSQL. If you want to continue with MSSQL, adjust the ConnectionStrings section in the `appsetting.json` file according to your settings.
@@ -80,7 +80,6 @@ The project is initially configured with the base api url via `api.js`. If your 
 1. Clone the repo:
    ``` 
    git clone https://github.com/emrebayrakk/EMaster.git
-   cd backend
    ```
 
 2. Start project
